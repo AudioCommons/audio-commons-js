@@ -1,0 +1,15 @@
+{
+    "name": "@audio-commons/mediator-express",
+    "description": "Node.js Express access to the Audio Commons Mediator",
+    "version": "1.0.2",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "main": "dist/index.js",
+    "dependencies": {},
+    "devDependencies": {}
+}
