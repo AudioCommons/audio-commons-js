@@ -1,6 +1,6 @@
 var puzzles = {
-    name: "b-colabo.space",
-    description: "Colabo.space ecosystem - backend",
+    name: "audio-commons-js",
+    description: "JavaScript set of tools and libraries for accessing Audio Commons Ecosystem",
     sudo: {
         "offer": false,
         "install": false,
@@ -8,7 +8,7 @@ var puzzles = {
         "symlinks": false
     },
     dependencies: {
-        "@colabo-utils/config": {},
+        "@colabo-utils/i-config": {},
         "@audio-commons/mediator-access": {},
         "@audio-commons/mediator-express": {}
     },

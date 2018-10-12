@@ -1,6 +1,6 @@
 const MODULE_NAME: string = "@audio-commons/mediator-access";
 
-let config = require('@colabo-utils/config');
+let config = require('@colabo-utils/i-config');
 
 var http = require("https");
 // We need this to build our post string

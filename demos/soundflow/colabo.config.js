@@ -2,7 +2,7 @@ var puzzles = {
     name: "b-colabo.space",
     description: "Colabo.space ecosystem - backend",
     dependencies: {
-        "@colabo-utils/config": {},
+        "@colabo-utils/i-config": {},
         "@audio-commons/mediator-access": {}
     },
     offers: {}

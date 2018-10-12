@@ -3,7 +3,7 @@ const MODULE_NAME: string = "soundflow-demo";
 let configFile: any = require('./config/global');
 let globalSet: any = configFile.globalSet;
 console.log("[soundflow:index] globalSet.paths: %s", JSON.stringify(globalSet.paths));
-let config = require('@colabo-utils/config');
+let config = require('@colabo-utils/i-config');
 config.init(globalSet);
 
 import * as mediator from "@audio-commons/mediator-access";

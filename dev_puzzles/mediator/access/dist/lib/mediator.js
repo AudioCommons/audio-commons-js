@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const MODULE_NAME = "@audio-commons/mediator-access";
-let config = require('@colabo-utils/config');
+let config = require('@colabo-utils/i-config');
 var http = require("https");
 // We need this to build our post string
 var querystring = require('querystring');
@@ -52,19 +52,19 @@ function getToken(callback) {
     if (exports.status.debug)
         console.log("getToken: http path: ", options.path);
     // TODO support detecting and forwarding errors
-    var req = http.request(options, function (res) {
+    var req = http.request(options, function(res) {
         var bodyStr = "";
         if (exports.status.debug)
             console.log('STATUS: ' + res.statusCode);
         if (exports.status.debug)
             console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             if (exports.status.debug)
                 console.log('chunk length: ' + chunk.length);
             bodyStr += chunk;
         });
-        res.on('end', function () {
+        res.on('end', function() {
             if (exports.status.debug)
                 console.log('bodyStr: ' + bodyStr);
             var body = JSON.parse(bodyStr);
@@ -76,7 +76,7 @@ function getToken(callback) {
             callback(tokenCredentials);
         });
     });
-    req.on('error', function (e) {
+    req.on('error', function(e) {
         if (exports.status.showError)
             console.error('problem with request: ' + e.message);
     });
@@ -86,8 +86,7 @@ function getToken(callback) {
     req.write(post_data);
     req.end();
 }
-exports.getToken = getToken;
-;
+exports.getToken = getToken;;
 // curl -i -H "Authorization: Bearer MMOeBDmt0mHC6NY99xH6bN9yfPkMck" https://m.audiocommons.org/api/v1/search/text/?q=cars
 function search(searchQuery, callback) {
     var options = {
@@ -101,19 +100,19 @@ function search(searchQuery, callback) {
     };
     if (exports.status.debug)
         console.log("search: http path: ", options.path);
-    var req = http.request(options, function (res) {
+    var req = http.request(options, function(res) {
         var bodyStr = "";
         if (exports.status.debug)
             console.log('STATUS: ' + res.statusCode);
         if (exports.status.debug)
             console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             if (exports.status.debug)
                 console.log('chunk length: ' + chunk.length);
             bodyStr += chunk;
         });
-        res.on('end', function () {
+        res.on('end', function() {
             if (exports.status.debug)
                 console.log('bodyStr: ' + bodyStr);
             var body = JSON.parse(bodyStr);
@@ -122,14 +121,13 @@ function search(searchQuery, callback) {
             callback(body, response_id, collect_url);
         });
     });
-    req.on('error', function (e) {
+    req.on('error', function(e) {
         if (exports.status.showError)
             console.error('problem with request: ' + e.message);
     });
     req.end();
 }
-exports.search = search;
-;
+exports.search = search;;
 // curl -i -H "Authorization: Bearer MMOeBDmt0mHC6NY99xH6bN9yfPkMck" https://m.audiocommons.org/api/v1/collect/?rid=ed360c90-3221-4ecc-a471-01ec5ca4a915
 function collect(rid, callback) {
     // rid = 'b8f9ad41-c3a5-4417-baa2-046864a9cc34'
@@ -147,36 +145,38 @@ function collect(rid, callback) {
     };
     if (exports.status.debug)
         console.log("collect: http path: ", options.path);
-    var req = http.request(options, function (res) {
+    var req = http.request(options, function(res) {
         var bodyStr = "";
         if (exports.status.debug)
             console.log("[%s:collect] STATUS: %s", MODULE_NAME, res.statusCode);
         if (exports.status.debug)
             console.log("[%s:collect] HEADERS: %s", MODULE_NAME, JSON.stringify(res.headers));
         res.setEncoding('utf8');
-        res.on('data', function (chunk) {
+        res.on('data', function(chunk) {
             if (exports.status.debug)
                 console.log("[%s] chunk length: %s", MODULE_NAME, chunk.length);
             bodyStr += chunk;
         });
-        res.on('end', function () {
+        res.on('end', function() {
             if (exports.status.debug)
                 console.log("[%s] bodyStr: %s", MODULE_NAME, bodyStr);
             var body = JSON.parse(bodyStr);
             callback(body);
         });
     });
-    req.on('error', function (e) {
+    req.on('error', function(e) {
         if (exports.status.showError)
             console.error("[%s] problem with request: %s", MODULE_NAME, e.message);
     });
     req.end();
 }
 exports.collect = collect;
+
 function collectWait(rid, collectOptions, callback) {
     collectOptions = collectOptions || {};
     let collectRequestNo = 0;
     let shouldFinish = false;
+
     function collectFinished(result) {
         console.log("[%s] Search result: %s", MODULE_NAME, result);
         if (collectOptions.collectRequestNoMax === collectRequestNo) {
@@ -194,8 +194,7 @@ function collectWait(rid, collectOptions, callback) {
         if (!shouldFinish) {
             console.log("Collecting try num: ", collectRequestNo++);
             collect(rid, collectFinished);
-        }
-        else {
+        } else {
             var previewUrl = result.contents.Freesound.results[0]["ac:preview_url"];
             var downloadName = /[^/]*$/.exec(previewUrl)[0];
             console.log("Freesound preview sound url: ", previewUrl);
@@ -221,6 +220,7 @@ function collectWait(rid, collectOptions, callback) {
     collect(rid, collectFinished);
 }
 exports.collectWait = collectWait;
+
 function init(callback) {
     let puzzleConfig = config.GetPuzzle(MODULE_NAME);
     console.log("[%s] client_id = ", MODULE_NAME, puzzleConfig.client_id);
@@ -228,7 +228,7 @@ function init(callback) {
     client_id = puzzleConfig.client_id;
     username = puzzleConfig.username;
     password = puzzleConfig.password;
-    getToken(function (tokenCredentials) {
+    getToken(function(tokenCredentials) {
         console.log("Initialized. Go on! Use:\n\tac.searchHigh('dance')");
         if (typeof callback === 'function')
             callback();
