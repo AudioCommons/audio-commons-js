@@ -6,6 +6,11 @@
     "publishConfig": {
         "access": "public"
     },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://https://github.com/mprinc/audio-commons-js.git"
+    },
     "scripts": {
         "build": "tsc"
     },
