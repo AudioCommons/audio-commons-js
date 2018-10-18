@@ -1,7 +1,7 @@
 {
     "name": "@audio-commons/mediator-access",
     "description": "Node.js access to the Audio Commons Mediator",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "private": false,
     "publishConfig": {
         "access": "public"
