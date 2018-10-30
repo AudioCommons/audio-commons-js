@@ -1,0 +1,22 @@
+{
+    "name": "@audio-commons/mediator-search",
+    "version": "0.2.1",
+    "description": "Frontend angular component for searching through the Audio Commons sound providers",
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mprinc/audio-commons-js"
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "dependencies": {},
+    "peerDependenciesLocal": {},
+    "devDependencies": {}
+}
