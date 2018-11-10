@@ -8,6 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 // but in Angular 5.2.x and Rxjs 5x is:
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
+import * as Howler from 'howler';
 
 // interface IConstructor<T> {
 //   new(...args: any[]): T;
@@ -38,27 +39,35 @@ export class PlayerService {
     console.log('PlayerService.init');
   }
 
-  /**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-  protected handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  playSoundUrl(url:string, callback:Function=null):any{
+    var sound = new Howler.Howl({
+      src: [url]
+    });
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-      window.alert('error: ' + error);
+    sound.play();
 
-      // TODO: better job of transforming error for user consumption
-      //this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+    // Clear listener after first call.
+    sound.once('load', function () {
+      console.log("sound '%s' is loaded. Playing ...", url);
+      if (typeof callback === 'function') callback('loaded');
+      if (typeof callback === 'function') callback('playing');
+    });
+    
+    // Clear listener after first call.
+    sound.once('play', function () {
+      console.log("sound '%s' is playing ...", url);
+      if (typeof callback === 'function') callback('playing');
+    });
+    
+    // Fires when the sound finishes playing.
+    sound.once('end', function () {
+      if (typeof callback === 'function') callback('finished');
+      console.log("sound '%s' finished!");
+    });
+    
+    return sound;
   }
-
+  
   getSounds(searchQuery: string, callback: Function= null): Observable<any[]>{
     console.log('[getSounds] searchQuery: %s', searchQuery);
     return this.loadSounds(searchQuery, callback);

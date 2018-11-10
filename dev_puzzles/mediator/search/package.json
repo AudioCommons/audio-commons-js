@@ -16,7 +16,10 @@
     },
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "dependencies": {},
+    "dependencies": {
+        "moment": "^2.22.2",
+        "moment-duration-format": "^2.2.2"
+    },
     "peerDependenciesLocal": {},
     "devDependencies": {}
 }

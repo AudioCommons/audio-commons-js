@@ -9,17 +9,19 @@ export class SoundResultVO{
   public previewImage: string;
   public spectrogram: string;
   public waveform: string;
+  public duration: number;
 
   constructor(id:string, url:string, provider:string=null, name:string=null, 
   author:string=null, license:string=null, preview_url:string=null, 
     previewImage: string = null,
-    spectrogram: string = null, waveform: string = null){
+    spectrogram: string = null, waveform: string = null, duration: number = null){
     this.id = id;
     this.url = url;
     this.provider = provider;
     this.name = name;
     this.author = author;
     this.license = license;
+    this.duration = duration;
     this.preview_url = preview_url;
     this.previewImage = previewImage;
     this.spectrogram = spectrogram;

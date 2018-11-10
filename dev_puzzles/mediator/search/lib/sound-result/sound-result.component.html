@@ -12,13 +12,21 @@
         <p>license: {{sound.license}}</p>
         <p>
             <a href="{{sound.url}}">url</a><br/>
-            <a href="{{sound.preview_url}}">preview url</a>
+            <a href="{{sound.preview_url}}">preview url</a><br/> duration: {{ soundDuration }}
         </p>
     </mat-card-content>
     <!-- <mat-card-footer>
     </mat-card-footer>   -->
     <mat-card-actions>
-        <!-- <button mat-button>SELECT</button> -->
-        <!-- <mat-slide-toggle (change)="onToggling()" class="example-margin" [checked]="getState()">{{getState() ? 'selected' : 'not selected'}}</mat-slide-toggle> -->
+        <button *ngIf="state === 'stopped' " mat-mini-fab mat-tooltip="Play Sound" tooltip-position="below" class="mat-mini mat-primary" aria-label="Play Sound" routerLink="/" style="margin-right: 5px;" (click)="play()">
+            <mat-icon [ngClass]="{warning: false}" title="Play">play_arrow</mat-icon>
+        </button>
+        <button *ngIf="state === 'loading' " mat-mini-fab mat-tooltip="Loading Sound" tooltip-position="below" class="mat-mini mat-primary" aria-label="Loading Sound" routerLink="/" style="margin-right: 5px;" (click)="stop()">
+            <mat-icon [ngClass]="{warning: false}" title="Loading Sound">sync</mat-icon>
+        </button>
+        <button *ngIf="state === 'playing' " mat-mini-fab mat-tooltip="Stop Playing Sound" tooltip-position="below" class="mat-mini mat-primary" aria-label="Stop Playing Sound" routerLink="/" style="margin-right: 5px;" (click)="stop()">
+            <mat-icon [ngClass]="{warning: false}" title="Stop">stop</mat-icon>
+        </button>
+
     </mat-card-actions>
 </mat-card>
