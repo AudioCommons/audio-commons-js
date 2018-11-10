@@ -1,6 +1,6 @@
 {
     "name": "@audio-commons/mediator-search",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Frontend angular component for searching through the Audio Commons sound providers",
     "private": false,
     "publishConfig": {
