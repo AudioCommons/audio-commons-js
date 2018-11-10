@@ -1,6 +1,6 @@
 {
     "name": "@audio-commons/mediator-search",
-    "version": "0.3.1",
+    "version": "0.2.4",
     "description": "Frontend angular component for searching through the Audio Commons sound providers",
     "private": false,
     "publishConfig": {
@@ -19,7 +19,7 @@
     "dependencies": {
         "moment": "^2.22.2",
         "moment-duration-format": "^2.2.2",
-        "@audio-commons/play-player": "latest"
+        "audio-commons/play-player": "latest"
     },
     "peerDependenciesLocal": {},
     "devDependencies": {}

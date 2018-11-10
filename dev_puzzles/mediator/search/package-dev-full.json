@@ -1,7 +1,7 @@
 {
-    "name": "@audio-commons/play-player",
-    "version": "0.1.1",
-    "description": "Audio Player Puzzle",
+    "name": "@audio-commons/mediator-search",
+    "version": "0.2.4",
+    "description": "Frontend angular component for searching through the Audio Commons sound providers",
     "private": false,
     "publishConfig": {
         "access": "public"
@@ -9,7 +9,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/mprinc/audio-commons-js"
+        "url": "https://github.com/AudioCommons/audio-commons-js"
     },
     "scripts": {
         "build": "tsc"
@@ -17,8 +17,8 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "dependencies": {
-        "@types/howler": "^2.0.5",
-        "howler": "^2.0.15"
+        "moment": "^2.22.2",
+        "moment-duration-format": "^2.2.2"
     },
     "peerDependenciesLocal": {},
     "devDependencies": {}
