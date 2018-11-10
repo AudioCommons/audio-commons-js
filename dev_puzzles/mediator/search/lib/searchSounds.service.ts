@@ -39,19 +39,7 @@ export class SearchSoundsService {
     new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
     "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg", 'https://freesound.org/data/displays/131/131392_2337290_wave_L.png'),
     new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg", 'https://freesound.org/data/displays/131/131392_2337290_wave_L.png'),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg"),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg"),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg"),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg"),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg"),
-    new SoundResultVO("Freesound:131392", "https://freesound.org/people/ecfike/sounds/131392/", "I Love Calculus.wav",
-    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg")
+    "ecfike", "CC0", "https://freesound.org/data/previews/131/131392_2337290-hq.ogg", 'https://freesound.org/data/displays/131/131392_2337290_wave_L.png')
   ];
 
   constructor(
@@ -95,8 +83,15 @@ export class SearchSoundsService {
   }
 
   loadSounds(searchQuery: string, callback: Function= null): Observable<any[]> {
+    let url: string;
+    if (config.GetGeneral('talkDirectlyToMediator')){
+      url = config.GetGeneral('mediatorUrl') + '/search?pattern=' + searchQuery;
+    }else{
+      url = SearchSoundsService.serverAP + '/search-sounds/' + searchQuery + '.json';      
+    }
+
     const result: Observable<any[]> 
-    = this.http.get<any>(SearchSoundsService.serverAP + '/search-sounds/' + searchQuery + '.json')
+    = this.http.get<any>(url)
       .pipe(
         map(soundsFromServer => this.processVOs(soundsFromServer)),
         // map(soundsFromServer => CFService.processVOs(nodesFromServer, KNode)),
@@ -118,7 +113,12 @@ export class SearchSoundsService {
   processVOs(resultFull: any): SoundResultVO[]{
     const sounds:SoundResultVO[] = [  ];
 
-    const soundsResultProviders = resultFull.data.results;
+    let soundsResultProviders:any;
+    if (config.GetGeneral('talkDirectlyToMediator')) {
+      soundsResultProviders = resultFull.results;
+    } else {
+      soundsResultProviders = resultFull.data.results;
+    }
     for (let providerId = 0; providerId < soundsResultProviders.length; providerId++) {
       const providerSounds = soundsResultProviders[providerId];
       const providerName: string = providerSounds.from.object;
@@ -168,7 +168,8 @@ export class SearchSoundsService {
           soundPreview,
           previewImage,
           spectrogram,
-          waveform
+          waveform,
+          sound.content.duration
         );
         sounds.push(soundVo);
       }
