@@ -1,7 +1,7 @@
 {
-    "name": "@audio-commons/mediator-search",
-    "version": "0.2.4",
-    "description": "Frontend angular component for searching through the Audio Commons sound providers",
+    "name": "@audio-commons/mediator-express",
+    "description": "Node.js Express access to the Audio Commons Mediator",
+    "version": "2.0.1",
     "private": false,
     "publishConfig": {
         "access": "public"
@@ -15,8 +15,6 @@
         "build": "tsc"
     },
     "main": "dist/index.js",
-    "module": "dist/index.js",
     "dependencies": {},
-    "peerDependenciesLocal": {},
     "devDependencies": {}
 }

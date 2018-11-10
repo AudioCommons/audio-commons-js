@@ -1,0 +1,47 @@
+<div fxLayout="column" fxFlexFill style="height: 100%;">
+
+    <!-- toolbar -->
+    <div fxFlex="64px" style="overflow-y: hidden;">
+        <mat-toolbar class="toolbar flexible mat-theme-indigo" color="primary" style="width: 100%;">
+            <!-- <img src="logo" height="55px" style="margin-right: 7px; opacity: 0.9; border-radius: 7px;" /> -->
+            <button mat-mini-fab mat-tooltip=" Start" tooltip-position="below" class="mat-mini mat-primary" aria-label="Start" routerLink="/" style="margin-right: 5px;">
+                <mat-icon [ngClass]="{warning: false}" title="Home">home</mat-icon>
+            </button>
+
+            <!-- <div><button mat-raised-button (click)="submit()" [disabled]="!correctSelection()">Submit</button></div> -->
+            <!-- <button color="primary" mat-raised-button (click)="openDialog()">Dialog</button> -->
+            <div>
+                <mat-form-field class="width-min: 100px">
+                    <input matInput type="search" placeholder="Search for sounds ..." value="" (keydown)="searchSounds($event)">
+                </mat-form-field>
+            </div>
+        </mat-toolbar>
+    </div>
+
+    <div fxFlex style="/*background-color: yellow;*/ overflow-y:scroll;">
+        <div *ngIf="!isLoggedIn" style="margin: 15px;">
+            <p>
+                To access this page you need:
+            </p>
+            <a routerLink="/rima-login">
+                <button mat-raised-button color="primary">Login</button>
+            </a>
+
+            <p>
+                or
+            </p>
+            <a routerLink="/rima-register">
+                <button mat-raised-button color="primary">Register</button>
+            </a>
+
+        </div>
+        <div *ngIf="isLoggedIn ">
+            <div style="margin: 15px;">
+                <h2>Sound results for: {{ searchParam }}</h2>
+                <div class="sounds">
+                    <!-- <div class='sound-results' fxLayout="row wrap " fxLayout.xs="column " fxLayoutGap="2% " fxLayoutAlign="center "> -->
+                    <app-sound-result *ngFor="let sound of sounds " class="sound" [sound]="sound"></app-sound-result>
+                </div>
+            </div>
+        </div>
+    </div>

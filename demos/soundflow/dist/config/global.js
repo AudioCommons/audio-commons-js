@@ -50,7 +50,8 @@ if (typeof module !== 'undefined') {
         if (typeof module['exports'] !== 'undefined') {
             module['exports'].globalSet = globalSet;
         }
-    } else {
+    }
+    else {
         module['exports'] = globalSet;
     }
 }

@@ -2,9 +2,13 @@ const MODULE_NAME: string = "@audio-commons/mediator-access";
 
 let config = require('@colabo-utils/i-config');
 
-var http = require("https");
+// var http = require("https");
+var http = require("http");
 // We need this to build our post string
 var querystring = require('querystring');
+
+/*
+// not supported by mediator yet
 
 var client_id;
 var username;
@@ -17,6 +21,7 @@ var tokenCredentials = {
     scope: null,
     refresh_token: null
 }
+*/
 
 export var status = {
     debug: true,
@@ -28,6 +33,9 @@ export var searches = {
     active: {},
     finished: {}
 }
+
+/*
+// not supported by mediator yet
 
 // curl -X POST https://m.audiocommons.org/api/o/token/ -d 'client_id=<YOUR_CLIENT_ID>&grant_type=password&username=<YOUR_USERNAME>&password=<YOUR_PASSWORD>'
 export function getToken(callback) {
@@ -90,17 +98,19 @@ export function getToken(callback) {
     req.write(post_data);
     req.end();
 };
+*/
 
 // curl -i -H "Authorization: Bearer MMOeBDmt0mHC6NY99xH6bN9yfPkMck" https://m.audiocommons.org/api/v1/search/text/?q=cars
 export function search(searchQuery, callback) {
 
     var options = {
-        host: 'm.audiocommons.org',
-        port: 443,
-        path: '/api/v1/search/text/?q=' + searchQuery,
+        host: 'm2.audiocommons.org',
+        // port: 443,
+        port: 80,
+        path: '/api/audioclips/search?pattern=' + searchQuery,
         method: 'GET',
         headers: {
-            'Authorization': "Bearer " + tokenCredentials.access_token
+            // 'Authorization': "Bearer " + tokenCredentials.access_token
         }
     };
 
@@ -117,10 +127,12 @@ export function search(searchQuery, callback) {
         res.on('end', function () {
             if (status.debug) console.log('bodyStr: ' + bodyStr);
             var body = JSON.parse(bodyStr);
-            let response_id = body.meta.response_id;
-            let collect_url = body.meta.collect_url;
+            let response_id = body['@id'];
+            let actionStatus = body.actionStatus;
+            let query = body.query;
+            console.log("query (' % s') finished. Action status: %s, @id = %s", query, actionStatus, response_id);
 
-            callback(body, response_id, collect_url);
+            callback(body, response_id);
         });
     });
 
@@ -130,6 +142,9 @@ export function search(searchQuery, callback) {
 
     req.end();
 };
+
+/*
+not supported
 
 // curl -i -H "Authorization: Bearer MMOeBDmt0mHC6NY99xH6bN9yfPkMck" https://m.audiocommons.org/api/v1/collect/?rid=ed360c90-3221-4ecc-a471-01ec5ca4a915
 export function collect(rid, callback) {
@@ -199,11 +214,13 @@ export function collectWait(rid:string, collectOptions:any, callback:Function){
             console.log("Collecting try num: ", collectRequestNo++);
             collect(rid, collectFinished);
         }else{
-            var previewUrl = result.contents.Freesound.results[0]["ac:preview_url"];
-            var downloadName = /[^/]*$/.exec(previewUrl)[0];
-            console.log("Freesound preview sound url: ", previewUrl);
-            var downloadPath = "./sounds/" + downloadName;
-            console.log("local downloadPath: ", previewUrl);
+            if (result.contents.Freesound && result.contents.Freesound.results.length > 0){
+                var previewUrl = result.contents.Freesound.results[0]["ac:preview_url"];
+                var downloadName = /[^/]*$/.exec(previewUrl)[0];
+                console.log("Freesound preview sound url: ", previewUrl);
+                var downloadPath = "./sounds/" + downloadName;
+                console.log("local downloadPath: ", previewUrl);                
+            }
             callback(result);
 
             // download.downloadFile(previewUrl, downloadPath,
@@ -224,8 +241,15 @@ export function collectWait(rid:string, collectOptions:any, callback:Function){
     console.log("Collecting try num: ", collectRequestNo++);
     collect(rid, collectFinished);
 }
+*/
+
 export function init(callback) {
     let puzzleConfig:any = config.GetPuzzle(MODULE_NAME);
+    if (typeof callback === "function"){
+        callback();
+    }
+/*
+not implemented
     console.log("[%s] client_id = ", MODULE_NAME, puzzleConfig.client_id);
     console.log("[%s] username = ", MODULE_NAME, puzzleConfig.username);
 
@@ -237,4 +261,5 @@ export function init(callback) {
         console.log("Initialized. Go on! Use:\n\tac.searchHigh('dance')");
         if (typeof callback === 'function') callback();
     });
+*/
 }

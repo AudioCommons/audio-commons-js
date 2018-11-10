@@ -1,0 +1,29 @@
+.app-play {
+    height: 100%;
+    box-sizing: border-box;
+    margin: 100;
+    padding: 100;
+    overflow-y: hidden;
+}
+
+.sound{
+  /* margin-bottom: 5px; */
+  /* width: 350px; */
+  padding: 5px;
+  /* width: 100%; */
+}
+
+.sounds{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+app-sound-result{
+  margin-bottom: 10px;
+  width: 400px;
+}
+
+.sound-results{
+  padding: 5px;
+}

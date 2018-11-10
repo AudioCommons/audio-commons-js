@@ -19,8 +19,11 @@ mediator.init(function(){
         console.log("[%s] results: %s", MODULE_NAME, JSON.stringify(results));
         let collectOptions = {
         };
+        /*
+        not implemented
         mediator.collectWait(response_id, collectOptions, function (result){
             console.log("[%s] collect result: %s", MODULE_NAME, JSON.stringify(result));
         });
+        */
     })
 });

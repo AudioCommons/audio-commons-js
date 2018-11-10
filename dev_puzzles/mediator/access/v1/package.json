@@ -1,7 +1,7 @@
 {
     "name": "@audio-commons/mediator-access",
     "description": "Node.js access to the Audio Commons Mediator",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "private": false,
     "publishConfig": {
         "access": "public"
@@ -9,7 +9,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git://https://github.com/mprinc/audio-commons-js.git"
+        "url": "https://github.com/AudioCommons/audio-commons-js"
     },
     "scripts": {
         "build": "tsc"
